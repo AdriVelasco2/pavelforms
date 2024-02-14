@@ -1,6 +1,6 @@
 // Composables
-import LoginFormVue from '@/components/LoginForm.vue'
-import RegFormVue from '@/components/RegForm.vue'
+import LoginFormVue from '@/views/core/LoginForm.vue'
+import RegFormVue from '@/views/core/RegForm.vue'
 import { createRouter, createWebHistory } from 'vue-router'
 
 const routes = [
