@@ -1,68 +1,56 @@
 <template>
   <div>
-    <h2>Agregar Usuario</h2>
-    <form @submit.prevent="agregarUsuario">
-      <label for="name">Nombre:</label>
-      <input type="text" id="name" v-model="name" required><br>
-      <label for="email">Email:</label>
-      <input type="email" id="email" v-model="email" required><br>
+    <h2>Looogin </h2>
+    <form @submit.prevent="logIn">
+
+      <label for="user">Usuario:</label>
+      <input type="text" id="user" v-model="user" required /><br />
+      <label for="password">Contraseña:</label>
+      <input type="password" id="password" v-model="password" required /><br />
       <button type="submit">Agregar Usuario</button>
     </form>
   </div>
 </template>
 
 <script>
-import axios from 'axios';
-import http from '../../services/HttpService'
+import http from "../../services/HttpService";
 
 export default {
   data() {
     return {
-      usuario: {
-        name: '',
-        email: ''
-            }
+      user: '',
+      password: ''
     };
   },
   methods: {
-    async agregarUsuario() {
+    async logIn() {
       try {
-        const userData = {
-          name: this.name,
-          email: this.email,
+        const response = await http.post('/api/auth/logIn', {
+          user: this.user, // Renombramos 'username' a 'user' para que coincida con el nombre esperado en el servidor
+          password: this.password
+        });
+        
+        // Manejar la respuesta del servidor
+        console.log(response.data);
 
-        };
-
-        const response = await http.post('/api/agregar-usuario', JSON.stringify(userData),{
-        headers: {
-            'Content-Type': 'application/json'
-          }
-      });
-        console.log("Usuario agregado correctamente",response.data);
-        // Realizar acciones con la respuesta recibida
-        console.log(response.status); // Aquí obtienes el código de estado HTTP
-
-if (response.status === 200) {
-  console.log('La solicitud fue exitosa');
-  console.log(response.data); // Aquí obtienes los datos de la respuesta
-  // Realizar acciones con la respuesta recibida
-} else {
-  console.error('La solicitud falló con el código de estado:', response.status);
-  // Manejar el error de acuerdo a tu lógica
-}
-} catch (error) {
-console.error('Error al enviar datos:', error);
-}}
+        // Redireccionar al usuario a la página de inicio, por ejemplo:
+        // this.$router.push('/home');
+      } catch (error) {
+        console.error('Error de inicio de sesión:', error);
+      }
     }
-  };
+  }
+
+
+}
 </script>
 
 <style>
-body {
-  height: fullscreen;
+body{
+    height: fullscreen;
 }
-html {
-  height: fullscreen;
-  background-color: white;
+html{
+    height: fullscreen;
+    background-color: white;
 }
 </style>

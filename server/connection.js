@@ -13,5 +13,5 @@ mongoose
 .catch(err =>console.log(err))
 
 db.once('open',_=>{
-    console.log('Database is conected to', uri);
+    console.log('Database is conected a Adri');
 })

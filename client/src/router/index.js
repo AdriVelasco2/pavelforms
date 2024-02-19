@@ -1,6 +1,7 @@
 // Composables
 import LoginFormVue from '@/views/core/LoginForm.vue'
 import RegFormVue from '@/views/core/RegForm.vue'
+import ForgotVue from '@/views/core/Forgot.vue'
 import { createRouter, createWebHistory } from 'vue-router'
 
 const routes = [
@@ -41,6 +42,19 @@ const routes = [
         // this generates a separate chunk (Home-[hash].js) for this route
         // which is lazy-loaded when the route is visited.
         component: RegFormVue,
+      },
+    ],
+  },
+  {
+   
+    children: [
+      {
+        path: '/recover',
+        name: 'Recover',
+        // route level code-splitting
+        // this generates a separate chunk (Home-[hash].js) for this route
+        // which is lazy-loaded when the route is visited.
+        component: ForgotVue,
       },
     ],
   },
