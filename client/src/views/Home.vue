@@ -1,10 +1,36 @@
 <template>
-  <LoginForm/>
-  <RegForm/>
+  <div>
+    <div v-if="isLoggedIn">
+      <h2>Bienvenido a la página de inicio</h2>
+      <button @click="logout">Cerrar sesión</button>
+    </div>
+    <div v-else>
+      <h2>Inicia sesión para acceder a la página de inicio</h2>
+      <button @click="goLogin">INICIA SESIÓN</button>
+
+    </div>
+  </div>
 </template>
 
-<script setup>
+<script>
+import { useAuthStore } from '@/store/authStore';
 
-import RegForm from '@/views/core/RegForm.vue';
-import LoginForm from '@/views/core/LoginForm.vue';
+export default {
+  methods: {
+    logout() {
+      const authStore = useAuthStore();
+      authStore.clearToken();
+      this.$router.push('/login');
+    },
+    goLogin() {
+      this.$router.push('/login');
+    }
+  },
+  computed: {
+    isLoggedIn() {
+      const authStore = useAuthStore();
+      return authStore.isLoggedIn;
+    }
+  }
+};
 </script>

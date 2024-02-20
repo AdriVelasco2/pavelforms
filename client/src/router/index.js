@@ -3,6 +3,8 @@ import LoginFormVue from '@/views/core/LoginForm.vue'
 import RegFormVue from '@/views/core/RegForm.vue'
 import ForgotVue from '@/views/core/Forgot.vue'
 import { createRouter, createWebHistory } from 'vue-router'
+import CodeVue from '@/views/core/Code.vue'
+import CodePageVue from '@/views/core/CodePage.vue'
 
 const routes = [
   {
@@ -10,7 +12,7 @@ const routes = [
     component: () => import('@/layouts/default/Default.vue'),
     children: [
       {
-        path: '',
+        path: '/home',
         name: 'Home',
         // route level code-splitting
         // this generates a separate chunk (Home-[hash].js) for this route
@@ -45,19 +47,63 @@ const routes = [
       },
     ],
   },
+  // {
+   
+  //   children: [
+  //     {
+  //       path: '/recover',
+  //       name: 'Recover',
+  //       // route level code-splitting
+  //       // this generates a separate chunk (Home-[hash].js) for this route
+  //       // which is lazy-loaded when the route is visited.
+  //       component: ForgotVue,
+  //     },
+  //   ],
+  // },
   {
    
     children: [
       {
-        path: '/recover',
-        name: 'Recover',
+        path: '/codePage/forgotPassword/:id',
+        name: 'Code',
         // route level code-splitting
         // this generates a separate chunk (Home-[hash].js) for this route
         // which is lazy-loaded when the route is visited.
-        component: ForgotVue,
+        component: CodeVue,
       },
     ],
   },
+  {
+   
+    children: [
+      {
+        path: '/reset',
+        name: 'reset',
+        // route level code-splitting
+        // this generates a separate chunk (Home-[hash].js) for this route
+        // which is lazy-loaded when the route is visited.
+        component: CodeVue,
+      },
+    ],
+  },
+//   {
+//   children: [
+//     {
+//       path:'/codePage/forgotPassword/:id',
+//       name: 'CodePage',
+//       component: CodePageVue
+//     },
+//   ],
+// },
+{
+children: [
+  {
+    path: '/forgot',
+    name: 'ForgotPassword',
+    component: ForgotVue
+  },
+],
+},
 ]
 
 const router = createRouter({

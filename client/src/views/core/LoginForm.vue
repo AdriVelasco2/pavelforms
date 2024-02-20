@@ -14,7 +14,7 @@
 
 <script>
 import http from "../../services/HttpService";
-
+import { useAuthStore } from "@/store/authStore";
 export default {
   data() {
     return {
@@ -29,12 +29,14 @@ export default {
           user: this.user, // Renombramos 'username' a 'user' para que coincida con el nombre esperado en el servidor
           password: this.password
         });
-        
+        const authStore= useAuthStore();
         // Manejar la respuesta del servidor
         console.log(response.data);
-
+        // sessionStorage.setItem('token', response.data.token);
+        const token= response.data.token;
+        authStore.setToken(token);
         // Redireccionar al usuario a la página de inicio, por ejemplo:
-        // this.$router.push('/home');
+         this.$router.push('/home');
       } catch (error) {
         console.error('Error de inicio de sesión:', error);
       }
