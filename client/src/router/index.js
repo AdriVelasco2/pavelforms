@@ -1,32 +1,32 @@
 // Composables
-import LoginFormVue from '@/views/core/LoginForm.vue'
-import RegFormVue from '@/views/core/RegForm.vue'
-import ForgotVue from '@/views/core/Forgot.vue'
-import { createRouter, createWebHistory } from 'vue-router'
-import CodeVue from '@/views/core/Code.vue'
-import CodePageVue from '@/views/core/CodePage.vue'
+import LoginFormVue from "@/views/core/LoginForm.vue";
+import RegFormVue from "@/views/core/RegForm.vue";
+import ForgotVue from "@/views/core/Forgot.vue";
+import { createRouter, createWebHistory } from "vue-router";
+import CodeVue from "@/views/core/Code.vue";
+// import CodePageVue from "@/views/core/CodePage.vue";
+// import LogPruebaVue from "@/views/core/LogPrueba.vue";
 
 const routes = [
   {
-    path: '/',
-    component: () => import('@/layouts/default/Default.vue'),
+    path: "/",
+    component: () => import("@/views/Home.vue"),
     children: [
       {
-        path: '/home',
-        name: 'Home',
+        path: "/home",
+        name: "Home",
         // route level code-splitting
         // this generates a separate chunk (Home-[hash].js) for this route
         // which is lazy-loaded when the route is visited.
-        component: () => import('@/views/Home.vue'),
+        component: () => import("@/views/Home.vue"),
       },
     ],
   },
   {
-   
     children: [
       {
-        path: '/login',
-        name: 'Login',
+        path: "/login",
+        name: "Login",
         // route level code-splitting
         // this generates a separate chunk (Home-[hash].js) for this route
         // which is lazy-loaded when the route is visited.
@@ -35,11 +35,10 @@ const routes = [
     ],
   },
   {
-   
     children: [
       {
-        path: '/registro',
-        name: 'Registro',
+        path: "/registro",
+        name: "Registro",
         // route level code-splitting
         // this generates a separate chunk (Home-[hash].js) for this route
         // which is lazy-loaded when the route is visited.
@@ -48,7 +47,7 @@ const routes = [
     ],
   },
   // {
-   
+
   //   children: [
   //     {
   //       path: '/recover',
@@ -61,11 +60,10 @@ const routes = [
   //   ],
   // },
   {
-   
     children: [
       {
-        path: '/codePage/forgotPassword/:id',
-        name: 'Code',
+        path: "/codePage/forgotPassword/:id",
+        name: "Code",
         // route level code-splitting
         // this generates a separate chunk (Home-[hash].js) for this route
         // which is lazy-loaded when the route is visited.
@@ -74,11 +72,10 @@ const routes = [
     ],
   },
   {
-   
     children: [
       {
-        path: '/reset',
-        name: 'reset',
+        path: "/reset",
+        name: "reset",
         // route level code-splitting
         // this generates a separate chunk (Home-[hash].js) for this route
         // which is lazy-loaded when the route is visited.
@@ -86,29 +83,38 @@ const routes = [
       },
     ],
   },
-//   {
-//   children: [
-//     {
-//       path:'/codePage/forgotPassword/:id',
-//       name: 'CodePage',
-//       component: CodePageVue
-//     },
-//   ],
-// },
-{
-children: [
+  //   {
+  //   children: [
+  //     {
+  //       path:'/codePage/forgotPassword/:id',
+  //       name: 'CodePage',
+  //       component: CodePageVue
+  //     },
+  //   ],
+  // },
   {
-    path: '/forgot',
-    name: 'ForgotPassword',
-    component: ForgotVue
+    children: [
+      {
+        path: "/forgot",
+        name: "ForgotPassword",
+        component: ForgotVue,
+      },
+    ],
   },
-],
-},
-]
+  // {
+  //   children: [
+  //     {
+  //       path: "/prueba",
+  //       name: "prueba",
+  //       component: LogPruebaVue,
+  //     },
+  //   ],
+  // },
+];
 
 const router = createRouter({
   history: createWebHistory(process.env.BASE_URL),
   routes,
-})
+});
 
-export default router
+export default router;

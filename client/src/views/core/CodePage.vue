@@ -1,4 +1,4 @@
-<template>
+<!-- <template>
     <div>
         <h2>Looogin </h2>
         <form @submit.prevent="code">
@@ -15,7 +15,7 @@
 import { defineComponent } from 'vue';
 import { useRouter } from 'vue-router';
 import { useUserDataStore } from '@/store/user';
-import http from "../../services/HttpService";
+// import http from "../../services/HttpService";
   export default {
     setup() {
     const router = useRouter();
@@ -39,4 +39,4 @@ import http from "../../services/HttpService";
     };
   }
   };
-  </script>
+  </script> -->
