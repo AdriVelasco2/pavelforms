@@ -70,7 +70,7 @@ export default {
 
   methods: {
 
-    validations() {
+    async validations() {
 
 
       if (this.password != this.password2) {
@@ -87,16 +87,47 @@ export default {
         email: this.email,
         password: this.password,
       };
-      const send = this.igual;
-      const authStore = useAuthStore();
-      const success = await authStore.register(userData);
-      if (success && send) {
-        // Registro exitoso, redireccionar al usuario a la página de inicio
-        this.$router.push('/login');
-      } else {
-        // Registro fallido, mostrar un mensaje de error al usuario
-        console.log('Error al registrar usuario. Por favor, inténtelo de nuevo.');
+      try {
+        if(this.igual) {
+        const authStore = useAuthStore();
+      const success = await authStore.register(userData)
+        console.log(success);
+        if (success) {
+          this.$router.push("/login");
+        } else {
+          this.errorMessages = success.message_es;
+        }
       }
+      } catch (err) {
+        console.error(err);
+        if (err.response && err.response.data) {
+          this.errorMessages = err.response.data.message;
+          if (this.errorMessages === "Usuario no encontrado") {
+            this.username = "";
+            this.password = "";
+          } else {
+            this.password = "";
+          }
+          return;
+        } else {
+          this.errorMessages = "Ha ocurrido un problema";
+        }
+      }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     },
     // async agregarUsuario() {
     //   try {

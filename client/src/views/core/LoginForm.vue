@@ -6,7 +6,7 @@
     <div class="grid content-center">
       <div class="flex flex-col items-center">
         <h1 class="text-3xl mb-4">Login</h1>
-        <h1 class="text-sm mb-4">Introduce tus credenciales</h1>
+        <h1 class="text-sm mb-4">Introduce tu correo</h1>
         <form class="w-full max-w-md" @submit.prevent="logIn">
           <div class="mb-4">
             <label for="user" class="block text-gray-700">Usuario:</label>
@@ -25,10 +25,14 @@
               type="submit">
               Enviar
             </button>
-            <router-link to="/registro"
+            <router-link to="/forgot"
               class="inline-block align-baseline font-bold text-sm text-blue-500 hover:text-blue-800">
-              Registrarme
+              He olvidado mi contraseña
             </router-link>
+            <router-link to="/registro"
+            class="inline-block align-baseline font-bold text-sm text-red-500 hover:text-blue-800">
+            Registrarme
+          </router-link>
           </div>
         </form>
       </div>

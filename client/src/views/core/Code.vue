@@ -1,96 +1,158 @@
 <template>
-     
-    <div v-if="changes ===false" >
-      <h2>Looogin </h2>
-      <form @submit.prevent="coding">
-  
-        <label for="code">Introduce el código recibido:</label>
-        <input type="text" id="code" v-model="code" required /><br />
-      
-        <button type="submit">Dale duro</button>
-      </form>
-    </div>
-<div  v-else>
-        <h2>Looogin </h2>
-        <form @submit.prevent="change">
-    
-          <label for="password">Introduce una nueva contraseña</label>
-          <input type="text" id="password" v-model="password" required /><br />
-          <label for="password2">Repite la contraseña</label>
-          <input type="text" id="password2" v-model="password2" required /><br />
-          <button type="submit">Cambiar contraseña</button>
+  <div class="flex justify-center items-center h-screen bg-gray-300" v-if="changes === false">
+       <div class="flex flex-col items-center">
+        <h1 class="text-3xl font-bold mb-4">Introduce código recibido</h1>
+        <form class="w-full max-w-md" @submit.prevent="coding">
+          <div class="mb-4">
+            <label for="code" class="block text-gray-700"
+              >Código:</label
+            >
+            <input
+              type="text"
+              id="code"
+              v-model="code"
+              class="form-input mt-1 block w-full"
+              placeholder="Introduce el código"
+              required
+            /><br />
+          </div>
+
+          <div class="flex items-center justify-between">
+            <button
+              class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+              type="submit"
+            >
+              Enviar
+            </button>
+          </div>
         </form>
       </div>
-   
-  </template>
-  
-  <script>
-  import http from "../../services/HttpService";
-  import bcrypt from "bcryptjs";
-  export default {
-    created(){
-        const id = this.$route.params.id;
-        console.log("Id recibido: ", id);
-    },
-    data() {
-      return {
+    </div>
+   <div class="flex justify-center items-center h-screen bg-gray-300" v-else>
+    <div class="flex flex-col items-center">
+      <h1 class="text-3xl font-bold mb-4">Introduce código recibido</h1>
+        <form class="w-full max-w-md" @submit.prevent="change">
+          <div class="mb-4">
+            <label for="password" class="block text-gray-700"
+              >Introduce una nueva contraseña</label
+            >
+            <input
+              type="password"
+              id="password"
+              v-model="password" 
+              pattern="^(?=\w*\d)(?=\w*[A-Z])(?=\w*[a-z])\S{8,30}$"
+              title="Ha de tener un número, una mayúscula y un carácter especial"
+              class="form-input mt-1 block w-full"
+              placeholder="Introduce el código"
+              required
+            /><br />
+          </div>
+          <div class="mb-4">
+            <label for="password2" class="block text-gray-700"
+              >Repite la contraseña</label
+            >
+            <input
+              type="password"
+              id="password2"
+              v-model="password2"
+              class="form-input mt-1 block w-full"
+              placeholder="Introduce el código"
+              required
+            /><br />
+          </div>
+          <div class="flex items-center justify-between">
+            <button
+              @click="validations"
+              class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+              type="submit"
+            >
+              Enviar
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+ </template>
+
+<script>
+import http from "../../services/HttpService";
+import bcrypt from "bcryptjs";
+export default {
+  created() {
+    const id = this.$route.params.id;
+    console.log("Id recibido: ", id);
+  },
+  data() {
+    return {
+      changes: false,
+      password: "",
+      password2: "",
+
+      id: this.$route.params.id,
+      code: "",
+      igual: false,
+
+    };
+  },
+  methods: {
+    validations() {
+
+
+if (this.password != this.password2) {
+  alert("Las contraseñas no coinciden")
+  return this.igual = false;
+} else {
+  return this.igual = true;
+}
+},
+    async coding() {
+      //Mandamos el código
+      try {
         
-        changes: false,
-        password:'',
-        id: this.$route.params.id,
-        code: '',
-      };
-    },
-    methods: {
-      async coding() { //Mandamos el código
-        try {
-          const response = await http.post('/api/auth/code', {
-            id: this.id,
-            code: this.code,
-            
-          });
-          this.changes = true;
-          // Manejar la respuesta del servidor
-          console.log("Código recibido: ", this.code, " Id Recibido: ",this.id);
-          console.log(response.data);
-  
-          // Redireccionar al usuario a la página de inicio, por ejemplo:
-        //   this.$router.push(`/codePage/forgotPassword/${this.id}`);
+          
+        const response = await http.post("/api/auth/code", {
+          id: this.id,
+          code: this.code,
+        });
+        this.changes = true;
+        // Manejar la respuesta del servidor
+        console.log("Código recibido: ", this.code, " Id Recibido: ", this.id);
+        console.log(response.data);
 
-        } catch (error) {
-          console.log("Código recibido: ", this.code, " Id Recibido: ",this.id);
-          this.changes = false;
-          console.error('Error de envío de código:', error);
-        }
-      },
+        // Redireccionar al usuario a la página de inicio, por ejemplo:
+          // this.$router.push('/login');
+      
 
-      async change(){
-        try{
-
-            const response = await http.put(`/api/user/password/${this.id}`,{
-                password: this.password
-            })
-            this.$router.push('/login');
-          console.log(response.data);
-
-        } catch(error){
-            console.error("Error: ", error);
-        }
-
+      } catch (error) {
+        // console.log("Código recibido: ", this.code, " Id Recibido: ", this.id);
+        this.changes = false;
+        console.error("Error de envío de código:", error);
       }
+    },
 
-    }
-  
-  
-  }
-  </script>
-  
-  <style>
-  body{
-      height: fullscreen;
-  }
-  html{
-      height: fullscreen;
-      background-color: white;
-  }
-  </style>
+    async change() {
+      try {
+        if(this.igual){
+        const response = await http.put(`/api/user/password/${this.id}`, {
+          password: this.password,
+        });
+        this.$router.push("/login");
+      }
+        console.log(response.data);
+      } catch (error) {
+        console.error("Error: ", error);
+      }
+    },
+  },
+};
+</script>
+
+<style>
+body {
+  height: fullscreen;
+}
+html {
+  height: fullscreen;
+  background-color: white;
+}
+</style>

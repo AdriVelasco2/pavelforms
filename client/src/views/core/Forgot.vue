@@ -1,14 +1,36 @@
 <template>
-    <div>
-      <h2>Looogin </h2>
-      <form @submit.prevent="forgot">
-  
-        <label for="email">email:</label>
-        <input type="text" id="email" v-model="email" required /><br />
-      
-        <button type="submit">Cambiar contraseña</button>
-      </form>
+  <div class="grid grid-cols-2 bg-slate-200">
+    <div class="flex  h-screen">
+      <img src="https://picsum.photos/id/439/500" class=" " alt="Imagen">
     </div>
+    <div class="grid content-center">
+      <div class="flex flex-col items-center">
+        <h1 class="text-3xl mb-4">Recupera tu contraseña</h1>
+        <h1 class="text-sm mb-4">Introduce tu correo</h1>
+        <form class="w-full max-w-md" @submit.prevent="forgot">
+          <div class="mb-4">
+            <label for="email" class="block text-gray-700">Email:</label>
+            <input type="email" class="form-input mt-1 block w-full" id="email" v-model="email" placeholder="Ingrese valor"
+              required /><br />
+          </div>
+         
+
+          <div class="flex items-center justify-between">
+            <button
+              class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+              type="submit">
+              Enviar
+          </button>
+          
+            <router-link to="/registro"
+            class="inline-block align-baseline font-bold text-sm text-red-500 hover:text-blue-800">
+            Registrarme
+          </router-link>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
   </template>
   
   <script>
